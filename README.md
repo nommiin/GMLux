@@ -1,7 +1,5 @@
-# GMLux
+# GMLux (Prototype)
 A GameMaker transpiler that supports per-event lightweight objejcts and eventually functions
-
-## This is a prototype!
 
 # Example:
 ```
