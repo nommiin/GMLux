@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script src="core/main.js"></script>
+        <script type="text/javascript"></script>
+    </head>
+    <body>
+        <center>
+            <b>Input</b><br>
+            <textarea id="input" cols="160" rows="8">
+object oPlayer = {x: "Hello World", y: 0};
+oPlayer.x = 64;
+show_debug_message(oPlayer.x);
+            </textarea>
+
+<!--
+
+oPlayer = ds_map_create(); oPlayer[? "x"] = 0; oPlayer[? "y"] = 0;
+oPlayer[? "x"] = 64;
+show_debug_message(oPlayer[? "x"]);
+
+-->
+            <br><b>Output</b><br>
+            <textarea id="output" cols="160" rows="8"></textarea>
+            <br><button onclick="GMLux.Transpile(document.getElementById('input'), document.getElementById('output'));">Transpile</button>
+        </center>
+    </body>
+</html>
