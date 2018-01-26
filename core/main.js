@@ -82,11 +82,18 @@ GMLux = {
                 if (tInput.substring(tPosition, tPosition + tObject.length) == tObject) {
                     output.value += tObject + "[? \"";
                     tPosition = GMLux.SeekChar(".") + 1;
+                    f = false;
                     GMLux.Objects[tObject].forEach(function(tProperty) {
                         if (tInput.substring(tPosition, tPosition + tProperty.length) == tProperty) {
                             output.value += tProperty + "\"]";
+                            f = true;
                         }
                     });
+
+                    if (f == false) {
+                        console.error("Could not find property!");
+                    }
+                    
                     tFound = true;
                 }
                 
