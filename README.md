@@ -2,7 +2,7 @@
 A GMLux to GML transpiler that adds support for lightweight objects in the form of ds_maps
 
 # Example:
-```
+```javascript
 #define main
 object oPlayer = {
     x: 32,
@@ -27,9 +27,9 @@ if (keyboard_check(vk_up) == true) {
 draw_rectangle(oPlayer.x - 8, oPlayer.y - 8, oPlayer.x + 8, oPlayer.y + 8, false);
 ```
 
-currently compiles to
+transpiles into:
 
-```
+```javascript
 #define main
 /*GMLuxCreate*/ oPlayer = ds_map_create(); oPlayer[? "x"] = 32; oPlayer[? "y"] = 32; oPlayer[? "speed"] = 8; 
 
