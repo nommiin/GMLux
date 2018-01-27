@@ -16,9 +16,9 @@ GMLux = {
                 if (tInput.substring(tColumn, tColumn + tObject.length) == tObject) {
                     tColumn = GMLux.SeekChar(".");
                     tOutput.value += tObject + "[? ";
-                    GMLux.Objects[tObject].forEach(function(tProperty) {
+                    GMLux.Objects[tObject].forEach(function(tProperty, tIndex) {
                         if (tInput.substring(tColumn, tColumn + tProperty.length) == tProperty) {
-                            tOutput.value += "\"" + tProperty + "\"]";
+                            tOutput.value += tIndex + "/*" + tProperty + "*/]";
                             tColumn += tProperty.length - 1;
                             tFound = true;
                         }
@@ -50,7 +50,7 @@ GMLux = {
     },
     Property: function(tObject, tProperty) {
         tHead = GMLux.SeekChar(":", 0, tProperty);
-        tOutput.value += tObject + "[? \"" + tProperty.substring(0, tHead - 1) + "\"] = " + tProperty.substring(tHead, tProperty.length).trim() + "; ";
+        tOutput.value += tObject + "[? " + GMLux.Objects[tObject].length + "/*" + tProperty.substring(0, tHead - 1) + "*/] = " + tProperty.substring(tHead, tProperty.length).trim() + "; ";
         GMLux.Objects[tObject].push(tProperty.substring(0, tHead - 1));
     },
     SeekChar: function(tChar, tPosition=tColumn, _tInput=tInput) {
