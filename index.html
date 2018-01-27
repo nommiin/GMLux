@@ -1,27 +1,46 @@
 <html>
     <head>
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+        * {
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+        }
+
+        button {
+            font-size: 22px;
+        }
+        </style>
         <script src="core/main.js"></script>
-        <script type="text/javascript"></script>
     </head>
     <body>
         <center>
-            <b>Input</b><br>
-            <textarea id="input" cols="160" rows="8">
-object oPlayer = {x: "Hello World", y: 0};
-oPlayer.x = 64;
-show_debug_message(oPlayer.x);
-            </textarea>
+            <b>Input Code</b><br>
+            <textarea id="input" cols="160" rows="22">#define main
+object oPlayer = {
+    x: 32,
+    y: 32,
+    speed: 8
+};
 
-<!--
+#define step
+if (keyboard_check(vk_left) == true) {
+    oPlayer.x -= oPlayer.speed;
+} else if (keyboard_check(vk_right) == true) {
+    oPlayer.x += oPlayer.speed;
+}
 
-oPlayer = ds_map_create(); oPlayer[? "x"] = 0; oPlayer[? "y"] = 0;
-oPlayer[? "x"] = 64;
-show_debug_message(oPlayer[? "x"]);
+if (keyboard_check(vk_up) == true) {
+    oPlayer.y -= oPlayer.speed;
+} else if (keyboard_check(vk_down) == true) {
+    oPlayer.y += oPlayer.speed;
+}
 
--->
-            <br><b>Output</b><br>
-            <textarea id="output" cols="160" rows="8"></textarea>
-            <br><button onclick="GMLux.Transpile(document.getElementById('input'), document.getElementById('output'));">Transpile</button>
+#define draw
+draw_rectangle(oPlayer.x - 8, oPlayer.y - 8, oPlayer.x + 8, oPlayer.y + 8, false);</textarea>
+            <br><b>Output Code</b><br>
+            <textarea id="output" cols="160" rows="24"></textarea>
+            <br><button onclick="GMLux.Transpile(document.getElementById('input'), document.getElementById('output'));">Transpile Input</button><br><button onclick="window.open('http://yal.cc/r/gml/?mode=2d&gml=' + window.btoa(document.getElementById('output').value))">Run in GMLive</button>
         </center>
     </body>
 </html>
