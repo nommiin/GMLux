@@ -75,7 +75,17 @@ GMLux = {
             tHead = GMLux.SeekChar("{", tTail + 1); tColumn = tHead;
             tTail = GMLux.SeekChar("}");            tColumn = tTail;
             GMLux.Properties(tObject, tInput.substring(tHead, tTail - 1).trim());
+        },
+        "#gmlux": function() {
+            // Transpiler Options
+            tHead = GMLux.SeekChar("\n");
+            switch (tInput.substring(tColumn, tHead).trim()) {
+                case "gms1": {GMLux.Version = 1; break;}
+                case "gms2": {GMLux.Version = 2; break;}
+            }
+            tColumn = tHead - 1;
         }
     },
-    Objects: {}
+    Objects: {},
+    Version: 2
 }
