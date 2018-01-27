@@ -1,5 +1,5 @@
-# GMLux (Prototype)
-A GameMaker transpiler that supports per-event lightweight objejcts and eventually functions
+# GMLux
+A GMLux to GML transpiler that adds support for lightweight objects in the form of ds_maps
 
 # Example:
 ```
