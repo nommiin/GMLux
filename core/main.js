@@ -1,6 +1,6 @@
 GMLux = {
     Transpile: function(input, output) {
-        tInput = input.value; tOutput = output; tFound = false; tOutput.value = "";
+        tInput = input.value; tOutput = output; tFound = false; tLocal = false; tOutput.value = "";
         for(tColumn = 0; tColumn < tInput.length; tColumn++) {
             // Token Loop
             for(tToken in GMLux.Tokens) {
@@ -15,10 +15,10 @@ GMLux = {
             for(tObject in GMLux.Objects) {
                 if (tInput.substring(tColumn, tColumn + tObject.length) == tObject) {
                     tColumn = GMLux.SeekChar(".");
-                    tOutput.value += tObject + "[? ";
+                    tOutput.value += tObject + "[";
                     GMLux.Objects[tObject].forEach(function(tProperty, tIndex) {
                         if (tInput.substring(tColumn, tColumn + tProperty.length) == tProperty) {
-                            tOutput.value += tIndex + "/*" + tProperty + "*/]";
+                            tOutput.value += "/*" + tProperty + "*/" + tIndex + "]";
                             tColumn += tProperty.length - 1;
                             tFound = true;
                         }
@@ -29,9 +29,14 @@ GMLux = {
             // Normal Character
             ((tFound) ? (tFound = false) : (tOutput.value += tInput[tColumn]));
         }
+
+        // Cleanup Objects
+        for(tObject in GMLux.Objects) {
+
+        }
     },
     Properties: function(tObject, tProperties, tPosition=0) {
-        var tMarker = tPosition, tString = false;
+        var tMarker = tPosition, tString = false, tOrder = 0;
         while (tPosition < tProperties.length) {
             while (tProperties[tPosition++] != ",") {
                 if (tPosition > tProperties.length) {
@@ -44,13 +49,14 @@ GMLux = {
                     if (tString) {tPosition++;}
                 }
             }
-            GMLux.Property(tObject, tProperties.substring(tMarker, tPosition - 1).trim());
+            GMLux.Property(tObject, tProperties.substring(tMarker, tPosition - 1).trim(), tOrder++);
             tMarker = tPosition;
         }
+        tOutput.value += "];"
     },
-    Property: function(tObject, tProperty) {
+    Property: function(tObject, tProperty, tOrder=0) {
         tHead = GMLux.SeekChar(":", 0, tProperty);
-        tOutput.value += tObject + "[? " + GMLux.Objects[tObject].length + "/*" + tProperty.substring(0, tHead - 1) + "*/] = " + tProperty.substring(tHead, tProperty.length).trim() + "; ";
+        tOutput.value += ((tOrder == 0) ? "" : ", ") + "/*" + tProperty.substring(0, tHead - 1) + "*/" + tProperty.substring(tHead, tProperty.length).trim();
         GMLux.Objects[tObject].push(tProperty.substring(0, tHead - 1));
     },
     SeekChar: function(tChar, tPosition=tColumn, _tInput=tInput) {
@@ -62,19 +68,29 @@ GMLux = {
         }
         return tPosition;
     },
+    SkipChar: function(tChar, tPosition=tColumn, _tInput=tInput) {
+        var c = 0;
+        while (_tInput[tPosition++] == tChar);
+        return tPosition;
+    },
     Tokens: {
+        "var": function() {
+            tLocal = (tInput.substring(GMLux.SkipChar(" ") - 1, GMLux.SkipChar(" ") + 5) == "object");
+        },
         "object": function() {
             // Object Name
             tHead = tColumn;
             tTail = GMLux.SeekChar("="); tColumn = tTail;
             tObject = tInput.substring(tHead, tTail - 1).trim();
-            tOutput.value += "/*GMLuxCreate*/ " + tObject + " = ds_map_create(); ";
+            tOutput.value += "/*GMLuxCreate*/ " + ((tLocal) ? "var " : "") + tObject + " = [";
             GMLux.Objects[tObject] = [];
             
             // Object Properties
             tHead = GMLux.SeekChar("{", tTail + 1); tColumn = tHead;
             tTail = GMLux.SeekChar("}");            tColumn = tTail;
             GMLux.Properties(tObject, tInput.substring(tHead, tTail - 1).trim());
+
+            tLocal = false;
         },
         "#gmlux": function() {
             // Transpiler Options
