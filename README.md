@@ -34,21 +34,21 @@ transpiles into:
 
 ```javascript
 #define main
-/*GMLuxCreate*/ oPlayer = ds_map_create(); oPlayer[? "x"] = 32; oPlayer[? "y"] = 32; oPlayer[? "speed"] = 8; 
+/*GMLuxCreate*/ oPlayer = [/*x*/32, /*y*/32, /*speed*/8];
 
 #define step
 if (keyboard_check(vk_left) == true) {
-    oPlayer[? "x"] -= oPlayer[? "speed"];
+    oPlayer[/*x*/0] -= oPlayer[/*speed*/2];
 } else if (keyboard_check(vk_right) == true) {
-    oPlayer[? "x"] += oPlayer[? "speed"];
+    oPlayer[/*x*/0] += oPlayer[/*speed*/2];
 }
 
 if (keyboard_check(vk_up) == true) {
-    oPlayer[? "y"] -= oPlayer[? "speed"];
+    oPlayer[/*y*/1] -= oPlayer[/*speed*/2];
 } else if (keyboard_check(vk_down) == true) {
-    oPlayer[? "y"] += oPlayer[? "speed"];
+    oPlayer[/*y*/1] += oPlayer[/*speed*/2];
 }
 
 #define draw
-draw_rectangle(oPlayer[? "x"] - 8, oPlayer[? "y"] - 8, oPlayer[? "x"] + 8, oPlayer[? "y"] + 8, false);
+draw_rectangle(oPlayer[/*x*/0] - 8, oPlayer[/*y*/1] - 8, oPlayer[/*x*/0] + 8, oPlayer[/*y*/1] + 8, false);
 ```
