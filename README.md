@@ -1,5 +1,5 @@
 # GMLux
-A GMLux to GML transpiler that adds support for lightweight objects in the form of ds_maps
+A GMLux to GML transpiler that adds support for lightweight objects in the form of arrays
 
 # GMLux Language
 GMLux stands for GameMaker L(anguage)uxury, where the luxury is the ability to use lightweight objects in GM!
